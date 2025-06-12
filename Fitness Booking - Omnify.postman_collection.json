@@ -1,0 +1,199 @@
+{
+	"info": {
+		"_postman_id": "56787717-c466-4584-958c-db5403215a04",
+		"name": "Fitness Booking - Omnify",
+		"description": "StartFragment\n\nWelcome to the **Fitness Booking API**, a simple and efficient RESTful API designed for a fictional fitness studio. This API enables clients to view upcoming fitness classes and book slots with ease. Built using FastAPI, it's perfect for small fitness studios looking to digitize their class management system.\n\n---\n\n## 🚀 Getting Started Guide\n\nTo start using the **Fitness Booking API**, follow these steps:\n\n1. bashCopyEdituvicorn main:app --reload\n    \n2. Access the API documentation at:\n    \n    - Swagger UI: [<code>http://127.0.0.1:8000/docs</code>](http://127.0.0.1:8000/docs)\n        \n    - ReDoc: [<code>http://127.0.0.1:8000/redoc</code>](http://127.0.0.1:8000/redoc)\n        \n3. Import the Postman collection or use the sample cURL/Postman requests provided in the README.\n    \n4. You can now use the endpoints to view classes, make bookings, and retrieve booking history.\n    \n\n---\n\n## 🔐 Authentication\n\n⚠️ _Authentication is not required_ for this version of the API.\n\nFor production systems, consider using **OAuth2 / JWT tokens** to protect client data and restrict admin access.\n\n---\n\n## 📌 Endpoints\n\n### ✅ `GET /classes`\n\nReturns all upcoming fitness classes.\n\n**Response Format**:\n\n```\njsonCopyEdit[\n  {\n    \"id\": 1,\n    \"name\": \"HIIT\",\n    \"date_time\": \"2025-06-13T10:30:00\",\n    \"instructor\": \"Aron Swartz\",\n    \"available_slots\": 50\n  },\n  ...\n]\n\n ```\n\n---\n\n### ✅ `POST /book`\n\nAllows a client to book a class.\n\n**Request Body**:\n\n```\njsonCopyEdit{\n  \"class_id\": 1,\n  \"client_name\": \"John Doe\",\n  \"client_email\": \"john@example.com\"\n}\n\n ```\n\n**Responses**:\n\n- `200 OK`: Booking successful\n    \n- `400 Bad Request`: Missing fields or overbooking\n    \n- `404 Not Found`: Class not found\n    \n\n---\n\n### ✅ `GET /bookings?email=john@example.com`\n\nReturns all bookings made by a specific client.\n\n**Sample Response**:\n\n```\njsonCopyEdit[\n  {\n    \"class_name\": \"Yoga\",\n    \"date_time\": \"2025-06-13T07:00:00\",\n    \"booked_at\": \"2025-06-12T12:00:00\"\n  },\n  ...\n]\n\n ```\n\n---\n\n## ⚙️ Rate Limits and Terms of Use\n\nThis is a demo API and does not impose any strict rate limits. However, in production environments:\n\n- Limit: 300 requests/min\n    \n- HTTP 429 is returned when exceeded\n    \n\nHeaders like `X-RateLimit-Limit`, `X-RateLimit-Remaining`, and `X-RateLimit-Reset` should be used for rate monitoring.\n\n---\n\n## ⚠️ Error Responses\n\n| Code | Reason |\n| --- | --- |\n| 400 | Missing fields or bad input |\n| 404 | Resource not found |\n| 409 | Duplicate booking |\n| 503 | Temporary server overload |\n\nEndFragment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42933785"
+	},
+	"item": [
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "classes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/classes",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"classes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 3,\r\n  \"client_name\": \"Arafat\",\r\n  \"client_email\": \"stringsss@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/book",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "specfic_user_booking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/booking/?email=strings@gmail.com",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"booking",
+								""
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "strings@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "StartFragment\n\n📌 GET `/classes`\n\n**Description**:\n\nReturns all upcoming fitness classes with the following details:\n\n- `name`: Class name (e.g., Yoga, Zumba, HIIT)\n    \n- `date_time`: Scheduled date and time of the class (in ISO format)\n    \n- `instructor`: Instructor conducting the class\n    \n- `available_slots`: Remaining slots for booking\n    \n\n**📍Endpoint**:  \n`GET http://127.0.0.1:8000/classes`\n\n**✅ Sample Response**:\n\n``` json\njsonCopyEdit[\n  {\n    \"name\": \"HIIT\",\n    \"date_time\": \"2025-06-13T10:30:00\",\n    \"id\": 1,\n    \"instructor\": \"Aron Swartz\",\n    \"available_slots\": 50\n  },\n  {\n    \"name\": \"Yoga\",\n    \"date_time\": \"2025-06-13T07:00:00\",\n    \"id\": 2,\n    \"instructor\": \"Tyrell Wellick\",\n    \"available_slots\": 49\n  },\n  {\n    \"name\": \"Zumba\",\n    \"date_time\": \"2025-06-12T18:00:00\",\n    \"id\": 3,\n    \"instructor\": \"Elliot Alderson\",\n    \"available_slots\": 44\n  }\n]\n\n ```\n\nStartFragment\n\n### 📌 `POST /book`\n\n**Description**:\n\nBooks a fitness class for a client, checking availability and preventing duplicate or overbooking issues.\n\n---\n\n#### 🔸 Request\n\n**URL**: `http://127.0.0.1:8000/book`  \n**Method**: `POST`  \n**Content-Type**: `application/json`\n\n**Request Body Example**:\n\n```\njsonCopyEdit{\n  \"id\": 3,\n  \"client_name\": \"Arafat\",\n  \"client_email\": \"stringsss@gmail.com\"\n}\n\n ```\n\n- `id`: ID of the fitness class (integer)\n    \n- `client_name`: Name of the client (string)\n    \n- `client_email`: Email of the client (string)\n    \n\n---\n\n#### 🔸 Success Response\n\n**Status Code**: `200 OK`  \n**Content**:\n\n```\ntextCopyEditSession is Booked for Zumba at 2025-06-12 18:00:00, thanks Arafat\n\n ```\n\n---\n\n#### 🔸 Validation & Logic Handled\n\n- ✅ Checks if class with given `id` exists\n    \n- ✅ Ensures class has available slots\n    \n- ✅ Prevents overbooking (if all slots are full)\n    \n- ✅ Prevents the same user from booking the same class more than once a day\n    \n- ✅ Ensures booking happens **before** class start time\n    \n\n---\n\n#### 🔸 Error Responses\n\n| Status | Message | Condition |\n| --- | --- | --- |\n| 400 | Class not found | `id` doesn't match any class |\n| 409 | Already booked this class | Same user already booked this session |\n| 400 | Booking time is over | Current time is past the class start time |\n| 400 | No available slots for this class | Class is fully booked |\n\nEndFragment\n\nStartFragment\n\n## 📄 `GET /booking`\n\n### 🔍 Description:\n\nFetches all bookings made by a client using their email address. Each booking entry includes the class information and the booking timestamp.\n\n---\n\n### 🔗 Endpoint:\n\n```\nnginxCopyEditGET http://127.0.0.1:8000/booking?email=<client_email>\n\n ```\n\n---\n\n### ✅ Request Parameters:\n\n| Name | In | Type | Required | Description |\n| --- | --- | --- | --- | --- |\n| `email` | query | string | ✅ Yes | Email of the client whose bookings should be fetched |\n\n📝 **Example**:\n\n```\nnginxCopyEditGET http://127.0.0.1:8000/booking?email=strings@gmail.com\n\n ```\n\n---\n\n### 🔁 Sample Response: `200 OK`\n\n```\njsonCopyEdit[\n  {\n    \"id\": 1,\n    \"booked_at\": \"2025-06-12T15:27:20.766613\",\n    \"fitness_class\": {\n      \"name\": \"Yoga\",\n      \"date_time\": \"2025-06-13T07:00:00\",\n      \"instructor\": \"Tyrell Wellick\",\n      \"available_slots\": 49\n    }\n  },\n  {\n    \"id\": 2,\n    \"booked_at\": \"2025-06-12T15:27:41.380970\",\n    \"fitness_class\": {\n      \"name\": \"Zumba\",\n      \"date_time\": \"2025-06-12T18:00:00\",\n      \"instructor\": \"Elliot Alderson\",\n      \"available_slots\": 43\n    }\n  },\n  ...\n]\n\n ```\n\n---\n\n### ❌ Possible Error Responses:\n\n| Status Code | Message | Reason |\n| --- | --- | --- |\n| `422` | Missing query parameter | Email parameter is required |\n| `404` | No bookings found | No bookings associated with this email |\n\n---\n\n### 🔐 Authentication:\n\nNo authentication is required for this demo API.\n\n---\n\n### 🧪 Test With cURL:\n\n```\nbashCopyEditcurl -X GET \"http://127.0.0.1:8000/booking?email=strings@gmail.com\"\n\n ```\n\nEndFragment"
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "classes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \"name\": \"string\",\r\n  \"date_time\": \"2025-06-12T11:49:37\",\r\n  \"instructor\": \"string\",\r\n  \"available_slots\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/classes",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"classes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All_bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/book_all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"book_all"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "StartFragment\n\n## 🆕 `POST /classes`\n\n### 🔍 Description:\n\nAdds a new fitness class to the system with details like name, date/time, instructor, and available slots.\n\n---\n\n### 🔗 Endpoint:\n\n```\nnginxCopyEditPOST http://127.0.0.1:8000/classes\n\n ```\n\n---\n\n### 📥 Request Body:\n\n| Field | Type | Required | Description |\n| --- | --- | --- | --- |\n| `name` | string | ✅ Yes | Name of the class (e.g., Yoga) |\n| `date_time` | datetime | ✅ Yes | Date and time of the class (ISO 8601 format) |\n| `instructor` | string | ✅ Yes | Name of the instructor |\n| `available_slots` | integer | ✅ Yes | Number of slots available for booking |\n\n📝 **Example Request Body**:\n\n```\njsonCopyEdit{\n  \"name\": \"Pilates\",\n  \"date_time\": \"2025-06-12T11:49:37\",\n  \"instructor\": \"Jane Doe\",\n  \"available_slots\": 20\n}\n\n ```\n\n---\n\n### 🔁 Sample Response: `200 OK`\n\n```\njsonCopyEdit{\n  \"message\": \"Classes is added Pilates and instrcutor Jane Doe\"\n}\n\n ```\n\n---\n\n### ❌ Possible Error Responses:\n\n| Status Code | Message | Reason |\n| --- | --- | --- |\n| `422` | Validation error | Missing or invalid request body fields |\n| `500` | Internal Server Error | Error saving the class in database |\n\n---\n\n### 🔐 Authentication:\n\nNo authentication is required for this endpoint (for demo purposes).\n\n---\n\n### 🧪 Test With cURL:\n\n```\nbashCopyEditcurl -X POST \"http://127.0.0.1:8000/classes\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"name\": \"Pilates\",\n  \"date_time\": \"2025-06-12T11:49:37\",\n  \"instructor\": \"Jane Doe\",\n  \"available_slots\": 20\n}'\n\n ```\n\nEndFragment\n\nStartFragment\n\n## 📜 `GET /book_all`\n\n### 🔍 Description:\n\nFetches the **complete list of all historical bookings** made by any user. These are bookings that were archived (e.g., reset by the APScheduler job after a class completes).\n\n---\n\n### 🔗 Endpoint:\n\n```\nnginxCopyEditGET http://127.0.0.1:8000/book_all\n\n ```\n\n---\n\n### ✅ Success Response: `200 OK`\n\nReturns a JSON list of all historical (archived) bookings.\n\n#### 🧾 Response Body Format:\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `id` | integer | Booking history ID |\n| `class_id` | integer | ID of the fitness class |\n| `client_id` | integer | ID of the client who booked the class |\n| `booked_at` | datetime | Timestamp when the booking was made |\n| `archived_at` | datetime | Timestamp when the booking was archived |\n\n#### 📥 Example Response:\n\n```\njsonCopyEdit[\n  {\n    \"id\": 1,\n    \"class_id\": 1,\n    \"client_id\": 1,\n    \"booked_at\": \"2025-06-12T03:05:07.605677\",\n    \"archived_at\": \"2025-06-12T13:42:47.356171\"\n  },\n  {\n    \"id\": 2,\n    \"class_id\": 2,\n    \"client_id\": 2,\n    \"booked_at\": \"2025-06-12T03:16:54.750655\",\n    \"archived_at\": \"2025-06-12T13:42:47.364870\"\n  }\n  // ... more items\n]\n\n ```\n\n---\n\n### ❌ Error Responses:\n\n| Status Code | Message | Reason |\n| --- | --- | --- |\n| `500` | Internal Server Error | Database or server failure |\n\n---\n\n### 🔐 Authentication:\n\nNot required (for development/demo).\n\n---\n\n### 🧪 Test With cURL:\n\n```\nbashCopyEditcurl -X GET \"http://127.0.0.1:8000/book_all\n\n ```\n\nEndFragment"
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "X-API-Key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://farming-simulator.pstmn.io"
+		}
+	]
+}
